@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Buy</title>
+<link rel="stylesheet" href="/Buy.css">
+</head>
+<body>
+<div class="main">
+	<div class="topbar1"></div>
+	<div class="topbar2">
+		<div class="container1">
+			<div class="logout-btn">
+				<a href="Login.html">Logout</a>
+			</div>
+		</div>
+	</div>
+	<div class="header">
+		<div class="container2">
+			<div class="navbar">
+				<a href="profile">HOME</a>
+				<a href="Orders">ORDERS</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="active">
+    
+    <div class="filler"></div>
+    <div class="filler2"></div>
+				<div class="block">
+					<% let flag = 0; %>
+					<% products.forEach(product => { %>
+						<% if (flag === 4) { %>
+				<div class="filler2"></div>
+                <div class="block">
+                <% flag = 1; %>
+            <% } else { %>
+                <% flag++; %>
+            <% } %>
+			<div class="row">
+ 				<div class="column">
+    				<div class="card">
+    				<img src="/pills.png" width=180 height=200>
+  					<h1><%= product.pname %></h1>
+  					<p><b>ID: </b><%= product.pid %></p>
+					<p><b>Manufacturer: </b><%= product.manufacturer %></p>
+					<p><b>Mfg Date: </b><%= product.mfg %></p>
+					<p><b>Stock: </b><%= product.quantity %></p>
+					<p><b>Price: </b><%= product.price %></p>
+					<% if (product.quantity > 0) { %>
+  					<form action="PlaceOrder" method="post">
+  					<input type="number" name="orderquantity" onkeypress="return event.charCode>= 48 && event.charCode<= 57" placeholder="Enter quantity" max="<%= product.quantity %>" required >
+  					<input type="hidden" name="pid" value="<%= product.pid %>">
+  					<p></p>
+  					<button>Buy</button></form></div>
+					  <% } else { %>
+  					
+  					<button>Out Of Stock</button></div>
+					  <% } %>
+  				</div>
+  				<% }); %>
+			</div>
+			
+</body>
+</html>

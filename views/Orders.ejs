@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Orders</title>
+<link rel="stylesheet" href="/Orders.css">
+</head>
+<body>
+<div class="main">
+	<div class="topbar1"></div>
+	<div class="topbar2">
+		<div class="container1">
+			<div class="logout-btn">
+				<a href="Login.html">Logout</a>
+			</div>
+		</div>
+	</div>
+	<div class="header">
+		<div class="container2">
+			<div class="navbar">
+				<a href="profile">HOME</a>
+				<a href="Buy">BUY</a>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="active">
+    <div class="filler"></div>
+    <div class="filler2"></div>
+		<table class="tables">
+			<tr>
+    			<th>Order ID</th>
+    			<th>Product ID</th>
+    			<th>Price</th>
+    			<th>Quantity</th>
+    			<th>Seller ID</th>
+    			
+  			</tr>
+			  <% orders.forEach(order => { %>
+	  		
+  			<tr>
+    			<td><%= order.oid %></td>
+    			<td><%= order.pid %></td>
+    			<td><%= order.price %></td>
+    			<td><%= order.quantity %></td>
+    			<td><%= order.sid %></td>
+  			</tr>
+  			
+			  <% }) %>
+		</table>
+		</div>
+</body>
+</html>

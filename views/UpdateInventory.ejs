@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<form action="/restock" method="post">
+		<input type="text" name="restock" placeholder="Quantity" required>
+		<input type="hidden" name="pid" value="<%= productId %>">
+		<button type="submit">ReStock</button>
+	</form>
+
+</body>
+</html>

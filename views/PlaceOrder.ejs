@@ -1,0 +1,15 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Orders JSP</title>
+</head>
+<body>
+	<form action="/place-order" method="post">
+        <input type="hidden" name="pid" value="<%= product.pid %>">
+        <input type="number" name="orderquantity" required>
+        <button type="submit">Place Order</button>
+
+</body>
+</html>
