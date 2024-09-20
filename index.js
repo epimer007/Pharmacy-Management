@@ -250,10 +250,10 @@ app.get('/login', (req, res) => {
 
 //login error
 app.get("/LoginError1.html",(req,res)=>{
-    res.send("<p>Invalid details</p>");
+    res.sendFile(__dirname+"/LoginError1.html");
 })
 app.get("/LoginError2.html",(req,res)=>{
-    res.send("<p>Invalid details</p>");
+    res.sendFile(__dirname+"/LoginError2.html");
 })
 
 //---------------------------------------------------------------------------
@@ -411,6 +411,7 @@ app.post('/PlaceOrder', encoder,(req, res) => {
 
     const query1 = 'SELECT p.pid, o.sid, p.price FROM inventory o, product p WHERE p.pid = ? AND p.pid = o.pid';
     const query2 = 'INSERT INTO orders (pid, sid, uid, quantity, price) VALUES (?, ?, ?, ?, ?)';
+    const query3 = 'UPDATE inventory SET quantity = quantity - ? WHERE pid = ? AND sid = ?';
 
     con.query(query1, [pid], (err, result) => {
         if (err) {
@@ -420,8 +421,12 @@ app.post('/PlaceOrder', encoder,(req, res) => {
         
 
         if (result.length > 0) {
-            const { pid, sid, price } = result[0];
+            const { pid, sid,quantity,price } = result[0];
             const totalPrice = orderquantity * price;
+
+            if (quantity < orderquantity) {
+                return res.status(400).send('Not enough quantity in stock');
+            }
 
             con.query(query2, [pid, sid, guid, orderquantity, totalPrice], (err2, result2) => {
                 if (err2) {
@@ -429,8 +434,18 @@ app.post('/PlaceOrder', encoder,(req, res) => {
                     return res.status(500).send('An error occurred');
                 }
 
+
+                // Update the inventory
+                con.query(query3, [orderquantity, pid, sid], (err3, result3) => {
+                    if (err3) {
+                        console.error('Error executing query3: ', err3);
+                        return res.status(500).send('Failed to update inventory');
+                    }
+
+
                 // Redirect to orders page after successful order placement
                 res.redirect('/orders');
+                });
             });
         } else {
             res.status(404).send('Product not found');
